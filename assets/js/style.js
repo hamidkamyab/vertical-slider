@@ -1,4 +1,4 @@
-const horizontalSlider = {
+const verticalSlider = {
 
   news: [],
 
@@ -35,7 +35,7 @@ const fetchData = async () => {
 
     const data = await response.json();
 
-    horizontalSlider.news = [...data];
+    verticalSlider.news = [...data];
 
 
 
@@ -124,13 +124,13 @@ const sliding = () => {
 
   document
 
-    .getElementById(`item-${horizontalSlider.currentNews}`)
+    .getElementById(`item-${verticalSlider.currentNews}`)
 
     .classList.add("active");
 
   document
 
-    .getElementById(`sliderContentItem-${horizontalSlider.currentNews}`)
+    .getElementById(`sliderContentItem-${verticalSlider.currentNews}`)
 
     .classList.add("active");
 
@@ -162,9 +162,9 @@ const sliderItemEvent = () => {
 
 const handleSelectNews = (index) => {
 
-  horizontalSlider.currentNews = Number(index);
+  verticalSlider.currentNews = Number(index);
 
-  clearInterval(horizontalSlider.timerId);
+  clearInterval(verticalSlider.timerId);
 
   sliding();
 
@@ -180,7 +180,7 @@ const sliderBtnEvent = () => {
 
     item.addEventListener("click", (e) => {
 
-      clearInterval(horizontalSlider.timerId);
+      clearInterval(verticalSlider.timerId);
 
       const action = e.currentTarget.getAttribute("data-action");
 
@@ -210,13 +210,13 @@ const sliderBtnEvent = () => {
 
 const nextSlide = () => {
 
-  if (horizontalSlider.currentNews < horizontalSlider.news.length - 1) {
+  if (verticalSlider.currentNews < verticalSlider.news.length - 1) {
 
-    horizontalSlider.currentNews++;
+    verticalSlider.currentNews++;
 
   } else {
 
-    horizontalSlider.currentNews = 0;
+    verticalSlider.currentNews = 0;
 
   }
 
@@ -228,13 +228,13 @@ const nextSlide = () => {
 
 const prevSlide = () => {
 
-  if (horizontalSlider.currentNews > 0) {
+  if (verticalSlider.currentNews > 0) {
 
-    horizontalSlider.currentNews--;
+    verticalSlider.currentNews--;
 
   } else {
 
-    horizontalSlider.currentNews = horizontalSlider.news.length - 1;
+    verticalSlider.currentNews = verticalSlider.news.length - 1;
 
   }
 
@@ -246,7 +246,7 @@ const prevSlide = () => {
 
 const autoSlide = () => {
 
-  horizontalSlider.timerId = setInterval(() => {
+  verticalSlider.timerId = setInterval(() => {
 
     nextSlide();
 
@@ -256,8 +256,8 @@ const autoSlide = () => {
 
 
 function truncateText(text) {
-  if (text.length > horizontalSlider.textLength) {
-    return text.slice(0, horizontalSlider.textLength) + '...';
+  if (text.length > verticalSlider.textLength) {
+    return text.slice(0, verticalSlider.textLength) + '...';
   }
   return text;
 }
