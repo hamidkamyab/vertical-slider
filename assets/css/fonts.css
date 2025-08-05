@@ -1,0 +1,69 @@
+@font-face {
+  font-display: swap !important;
+  font-family: yekanbakh;
+  font-weight: 400;
+  src: url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-04-Regular.eot);
+  src:
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-04-Regular.eot)
+      format("embedded-opentype"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-04-Regular.woff)
+      format("woff"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-04-Regular.ttf)
+      format("truetype");
+}
+
+@font-face {
+  font-display: swap !important;
+  font-family: yekanbakh;
+  font-weight: 500;
+  src: url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-05-Medium.eot);
+  src:
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-05-Medium.eot)
+      format("embedded-opentype"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-05-Medium.woff)
+      format("woff"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-05-Medium.ttf)
+      format("truetype");
+}
+
+@font-face {
+  font-display: swap !important;
+  font-family: yekanbakh;
+  font-weight: 600;
+  src: url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-06-Bold.eot);
+  src:
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-06-Bold.eot)
+      format("embedded-opentype"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-06-Bold.woff)
+      format("woff"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-06-Bold.ttf)
+      format("truetype");
+}
+
+@font-face {
+  font-display: swap !important;
+  font-family: yekanbakh;
+  font-weight: 700;
+  src: url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-07-Heavy.eot);
+  src:
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-07-Heavy.eot)
+      format("embedded-opentype"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-07-Heavy.woff)
+      format("woff"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-07-Heavy.ttf)
+      format("truetype");
+}
+
+@font-face {
+  font-display: swap !important;
+  font-family: yekanbakh;
+  font-weight: 800;
+  src: url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-08-Fat.eot);
+  src:
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-08-Fat.eot)
+      format("embedded-opentype"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-08-Fat.woff)
+      format("woff"),
+    url(/assets/fonts/yekanbakh/Yekan-Bakh-FaNum-08-Fat.ttf)
+      format("truetype");
+}
