@@ -1,51 +1,108 @@
-const verticalSlider = {
-
-  news: [],
-
-  currentNews: 0,
-
-  timerId: null,
-  textLength: 210
-
-};
 
 
 
-window.onload = () => {
 
-  fetchData();
+const wrapper = $('#main');
+let sliderContent;
+let sliderItemWrapper;
+let sliderBtn;
+let timerId;
 
-  sliderItemEvent();
-
-  sliderBtnEvent();
-
-  autoSlide();
-
-};
+window.onload = () => { init() };
 
 
 
-const fetchData = async () => {
+/////////Parametrs////////
+let news = [
+    {
+        "id": 1,
+        "title": "ثبت درخواست گذرنامه؛ حضوری یا غیرحضوری؟/ چگونه از ممنوع‌الخروج بودن خود مطلع شویم؟",
+        "descript": "گروه فراجا- رئیس پلیس گذرنامه فراجا در خصوص نحوه ثبت درخواست گذرنامه و چگونگی اطلاع از وضعیت افراد برای خروج از کشور توضیح می دهد.",
+        "image": "./assets/imgs/1.jpg",
+        "view": 10
+    },
+    {
+        "id": 2,
+        "title": "آغاز موج دوم سفر زائران اربعین حسینی",
+        "descript": "گروه استان ها-همدان- فرمانده قرارگاه اربعين فراجا با اشاره به پایان موج اول سفر زائران اربعین حسینی(ع) در روز گذشته از آغاز موج دوم سفرها خبر داد.",
+        "image": "./assets/imgs/2.jpg",
+        "view": 20
+    },
+    {
+        "id": 3,
+        "title": "آيين بدرقه بازرسان اعزامي به ماموريت تامين نظم و امنيت اربعين حسینی (ع) برگزار شد ",
+        "descript": "گروه فراجا -رئيس بازرسي کل فراجا در آيين بدرقه بازرسان اعزامي به مأموريت پياده‌روي اربعين حسینی(ع) اولويت نخست را امنيت دانست و گفت: در اجراي مأموريت‌ها هيچ موضوعي بر امنيت تقدم ندارد.",
+        "image": "./assets/imgs/3.jpg",
+        "view": 80
+    },
+    {
+        "id": 4,
+        "title": "آخرین تمهیدات پلیس برای خدمات رسانی به زائران اربعین حسینی",
+        "descript": "گروه فراجا- فرمانده قرارگاه اربعین فراجا از آخرین تمهیدات پلیس برای خدمات رسانی به زائران اربعین حسینی گفت.",
+        "image": "./assets/imgs/4.jpg",
+        "view": 5
+    },
+    {
+        "id": 5,
+        "title": "ثبت درخواست گذرنامه؛ حضوری یا غیرحضوری؟/ چگونه از ممنوع‌الخروج بودن خود مطلع شویم؟",
+        "descript": "گروه فراجا- رئیس پلیس گذرنامه فراجا در خصوص نحوه ثبت درخواست گذرنامه و چگونگی اطلاع از وضعیت افراد برای خروج از کشور توضیح می دهد.",
+        "image": "./assets/imgs/5.jpg",
+        "view": 10
+    },
+    {
+        "id": 6,
+        "title": "آغاز موج دوم سفر زائران اربعین حسینی",
+        "descript": "گروه استان ها-همدان- فرمانده قرارگاه اربعين فراجا با اشاره به پایان موج اول سفر زائران اربعین حسینی(ع) در روز گذشته از آغاز موج دوم سفرها خبر داد.",
+        "image": "./assets/imgs/6.jpg",
+        "view": 16
+    },
+    {
+        "id": 7,
+        "title": "آيين بدرقه بازرسان اعزامي به ماموريت تامين نظم و امنيت اربعين حسینی (ع) برگزار شد ",
+        "descript": "گروه فراجا -رئيس بازرسي کل فراجا در آيين بدرقه بازرسان اعزامي به مأموريت پياده‌روي اربعين حسینی(ع) اولويت نخست را امنيت دانست و گفت: در اجراي مأموريت‌ها هيچ موضوعي بر امنيت تقدم ندارد.",
+        "image": "./assets/imgs/7.jpg",
+        "view": 80
+    },
+    {
+        "id": 8,
+        "title": "آخرین تمهیدات پلیس برای خدمات رسانی به زائران اربعین حسینی",
+        "descript": "گروه فراجا- فرمانده قرارگاه اربعین فراجا از آخرین تمهیدات پلیس برای خدمات رسانی به زائران اربعین حسینی گفت.",
+        "image": "./assets/imgs/8.jpg",
+        "view": 5
+    }
 
-  //Fetch Data
+]
 
-  try {
+let currentNews = 0;
+let textLength = 210;
+let currentItemPage = 1;
 
-    const response = await fetch("assets/data.json");
-
-    const data = await response.json();
-
-    verticalSlider.news = [...data];
+/////////////////////////
 
 
+const init = () => {
+    initVaribales()
+    initEvents()
+}
 
-    //Mapping Data
+const initVaribales = () => {
+    sliderContent = wrapper.find("#sliderContent")
+    sliderItemWrapper = wrapper.find("#sliderItemWrapper")
+    sliderBtn = wrapper.find(".slider__btn")
+}
 
-    const contentTag = data
+const initEvents = () => {
+    mappingData();
+    sliderItemEvent();
+    sliderBtnEvent();
+    autoSlide();
+}
 
-      .map((item, index) => {
+const mappingData = async () => {
 
-        return `<div id="sliderContentItem-${index}" class="slider__content-item ${index === 0 ? 'active' : '' }" >
+    const contentTag = news.map((item, index) => {
+
+        return `<div id="sliderContentItem-${index}" class="slider__content-item ${index === 0 ? 'active' : ''}" >
                         <figure class="slider__img-wrapper">
                             <img class="slider__img-main" src="${item.image}" alt="">
                         </figure>
@@ -54,106 +111,79 @@ const fetchData = async () => {
                             <p class="slider__desc">${truncateText(item.descript)}</p>
                         </div>
                     </div>`;
-      })
+    })
 
-      .join("");
+        .join("");
 
 
 
-    const thumbnailTag = data
+    const thumbnailTag = news.map((item, index) => {
 
-      .map((item, index) => {
+        return `<li id="item-${index}" data-title="${item.title
 
-        return `<li id="item-${index}" data-title="${
+            }" data-index="${index}" class="${index == 0 ? 'active' : ''
 
-          item.title
-
-        }" data-index="${index}" class="${
-
-          index == 0 ? 'active' : ''
-
-        } slider__thumbnail-item" >
+            } slider__thumbnail-item" >
 
                         <figure class="slider__thumbnail-img-wrapper">
 
-                            <img class="slider__thumbnail-img" src="${
+                            <img class="slider__thumbnail-img" src="${item.image
 
-                              item.image
-
-                            }" alt="">
+            }" alt="">
 
                         </figure>
 
                     </li>`;
 
-      })
+    })
 
-      .join("");
+        .join("");
 
-
-
-    document.getElementById("sliderContent").innerHTML = contentTag;
-
-    document.getElementById("sliderItemWrapper").innerHTML = thumbnailTag;
-
-  } catch (error) {
-
-    console.log("Failed Slider: ", error);
-
-    alert("خطایی در بارگزاری اسلایدر رخ داده است:");
-
-  }
+    sliderContent.append(contentTag);
+    sliderItemWrapper.append(thumbnailTag);
 
 };
 
 
 
-const sliding = () => {
+const sliding = (action) => {
 
-  document.querySelectorAll(".slider__thumbnail-item").forEach((item) => {
+    const items = wrapper.find(".slider__thumbnail-item");
+    const itemHeight = items[0].offsetHeight + 6;
+    const visibleHeight = sliderItemWrapper[0].offsetHeight;
+    const itemsPerPage = Math.ceil(visibleHeight / itemHeight);
+    const totalItems = items.length;
 
-    item.classList.remove("active");
+    let newIndex = currentNews;
 
-  });
+    if (action === "next") {
+        newIndex = currentNews >= totalItems - 1 ? 0 : currentNews + 1;
+    } else if (action === "prev") {
+        newIndex = currentNews <= 0 ? totalItems - 1 : currentNews - 1;
+    }
 
-  document.querySelectorAll(".slider__content-item").forEach((item) => {
+    const newPage = Math.floor(newIndex / itemsPerPage);
+    sliderItemWrapper[0].scrollTo({
+        top: itemHeight * itemsPerPage * newPage,
+        behavior: "smooth"
+    });
 
-    item.classList.remove("active");
-
-  });
-
-  document
-
-    .getElementById(`item-${verticalSlider.currentNews}`)
-
-    .classList.add("active");
-
-  document
-
-    .getElementById(`sliderContentItem-${verticalSlider.currentNews}`)
-
-    .classList.add("active");
+    wrapper.find(".slider__thumbnail-item").removeClass("active");
+    wrapper.find(".slider__content-item").removeClass("active");
+    wrapper.find(`#item-${newIndex}`).addClass("active");
+    wrapper.find(`#sliderContentItem-${newIndex}`).addClass("active");
+    currentNews = newIndex;
 
 };
-
 
 
 const sliderItemEvent = () => {
 
-  document
-
-    .getElementById("sliderItemWrapper")
-
-    .addEventListener("click", (e) => {
-
-      const index = e.target.getAttribute("data-index");
-
-      if (index) {
-
-        handleSelectNews(index);
-
-      }
-
+    sliderItemWrapper.on("click", (e) => {
+        const index = e.target.getAttribute("data-index");
+        if (index) {
+            handleSelectNews(index);
+        }
     });
 
 };
@@ -161,14 +191,13 @@ const sliderItemEvent = () => {
 
 
 const handleSelectNews = (index) => {
+    currentNews = Number(index);
 
-  verticalSlider.currentNews = Number(index);
+    clearInterval(timerId);
 
-  clearInterval(verticalSlider.timerId);
+    sliding();
 
-  sliding();
-
-  autoSlide();
+    autoSlide();
 
 };
 
@@ -176,69 +205,40 @@ const handleSelectNews = (index) => {
 
 const sliderBtnEvent = () => {
 
-  document.querySelectorAll(".slider__btn").forEach((item) =>
+    sliderBtn.each(function () {
+        $(this).on("click", function (e) {
+            clearInterval(timerId);
 
-    item.addEventListener("click", (e) => {
+            const action = $(this).attr("data-action");
 
-      clearInterval(verticalSlider.timerId);
+            if (action === "next") {
+                nextSlide(action);
+            }
 
-      const action = e.currentTarget.getAttribute("data-action");
+            if (action === "prev") {
+                prevSlide(action);
+            }
 
-      if (action == "next") {
+            autoSlide();
+        });
+    });
 
-        nextSlide();
-
-      }
-
-
-
-      if (action == "prev") {
-
-        prevSlide();
-
-      }
-
-      autoSlide();
-
-    })
-
-  );
 
 };
 
 
 
-const nextSlide = () => {
+const nextSlide = (action) => {
 
-  if (verticalSlider.currentNews < verticalSlider.news.length - 1) {
-
-    verticalSlider.currentNews++;
-
-  } else {
-
-    verticalSlider.currentNews = 0;
-
-  }
-
-  sliding();
+    sliding(action);
 
 };
 
 
 
-const prevSlide = () => {
+const prevSlide = (action) => {
 
-  if (verticalSlider.currentNews > 0) {
-
-    verticalSlider.currentNews--;
-
-  } else {
-
-    verticalSlider.currentNews = verticalSlider.news.length - 1;
-
-  }
-
-  sliding();
+    sliding(action);
 
 };
 
@@ -246,18 +246,18 @@ const prevSlide = () => {
 
 const autoSlide = () => {
 
-  verticalSlider.timerId = setInterval(() => {
+    timerId = setInterval(() => {
 
-    nextSlide();
+        nextSlide("next");
 
-  }, 5000);
+    }, 5000);
 
 };
 
 
 function truncateText(text) {
-  if (text.length > verticalSlider.textLength) {
-    return text.slice(0, verticalSlider.textLength) + '...';
-  }
-  return text;
+    if (text.length > textLength) {
+        return text.slice(0, textLength) + '...';
+    }
+    return text;
 }
